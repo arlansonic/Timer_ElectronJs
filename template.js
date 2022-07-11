@@ -1,6 +1,6 @@
 const data = require('./data')
 
-const generateTrayTemplate = () => {
+const generateTrayTemplate = (win) => {
     let template = [
         {
             label: 'Cursos'
@@ -14,7 +14,10 @@ const generateTrayTemplate = () => {
     cursos.forEach((curso) => {
         let menuItem = {
             label: curso,
-            type: 'radio'
+            type: 'radio',
+            click: () => {
+                win.send('curso-trocado', curso)
+            }
         }
         template.push(menuItem)
     })

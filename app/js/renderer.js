@@ -7,7 +7,7 @@ let botaoPlay = document.querySelector('.botao-play')
 let tempo = document.querySelector('.tempo')
 let curso = document.querySelector('.curso')
 
-window.onload = async () => {    
+window.onload = async () => {
     data.getData(curso.textContent)
     let dados = await data.getData(curso.textContent)
     tempo.textContent = dados.tempo
@@ -29,4 +29,11 @@ botaoPlay.addEventListener('click', () => {
     }
     imgs = imgs.reverse()
     botaoPlay.src = imgs[0]
+})
+
+ipcRenderer.on('curso-trocado', async (event, nomeCurso) => {
+    data.getData(nomeCurso)
+    let dados = await data.getData(nomeCurso)
+    tempo.textContent = dados.tempo
+    curso.textContent = nomeCurso
 })

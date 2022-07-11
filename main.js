@@ -17,7 +17,7 @@ app.on('ready', () => {
 
     // Icone barra de Tarefas
     tray = new Tray('./app/img/icon-tray.png')
-    let template = templateGenerator.generateTrayTemplate()
+    let template = templateGenerator.generateTrayTemplate(mainWindow)
     let trayMenu = Menu.buildFromTemplate(template)
     tray.setContextMenu(trayMenu)  
 
