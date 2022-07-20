@@ -4,6 +4,8 @@ const data = require('../../data')
 
 let linkSobre = document.querySelector('#link-sobre');
 let botaoPlay = document.querySelector('.botao-play')
+let botaoAdicionar = document.querySelector('.botao-adicionar')
+let campoAdicionar = document.querySelector('.campo-adicionar')
 let tempo = document.querySelector('.tempo')
 let curso = document.querySelector('.curso')
 
@@ -37,3 +39,12 @@ ipcRenderer.on('curso-trocado', async (event, nomeCurso) => {
     tempo.textContent = dados.tempo
     curso.textContent = nomeCurso
 })
+
+botaoAdicionar.addEventListener('click', () => {
+    let novoCurso = campoAdicionar.value;
+    curso.textContent = novoCurso;
+    tempo.textContent = '00:00:00';
+    campoAdicionar.textContent = '';
+    ipcRenderer.send('curso-adicionado', novoCurso);
+})
+

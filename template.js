@@ -1,5 +1,6 @@
 const data = require('./data')
 
+templateInicial : null
 const generateTrayTemplate = (win) => {
     let template = [
         {
@@ -21,9 +22,22 @@ const generateTrayTemplate = (win) => {
         }
         template.push(menuItem)
     })
+    templateInicial = template
     return template
 }
 
+const adicionaCursoNoTray = (curso) => {
+    templateInicial.push({
+        label: curso,
+        type: 'radio',
+        click: () => {
+            win.send('curso-trocado', curso)
+        }
+    })
+
+    return templateInicial
+}
+
 module.exports = {
-    generateTrayTemplate
+    generateTrayTemplate, adicionaCursoNoTray
 }

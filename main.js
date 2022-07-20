@@ -5,7 +5,16 @@ const templateGenerator = require('./template')
 let tray = null
 app.on('ready', () => {
     console.log('Aplicacao Iniciada')
-    let mainWindow = new BrowserWindow({
+    // Icone barra de Tarefas
+    tray = new Tray('./app/img/icon-tray.png')
+    let template = templateGenerator.generateTrayTemplate(mainWindow)
+    let trayMenu = Menu.buildFromTemplate(template)
+    tray.setContextMenu(trayMenu)
+})
+
+let mainWindow = null
+app.on('ready', () => {
+    mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
@@ -13,14 +22,7 @@ app.on('ready', () => {
             contextIsolation: false,
             enableRemoteModule: true
         }
-    });
-
-    // Icone barra de Tarefas
-    tray = new Tray('./app/img/icon-tray.png')
-    let template = templateGenerator.generateTrayTemplate(mainWindow)
-    let trayMenu = Menu.buildFromTemplate(template)
-    tray.setContextMenu(trayMenu)  
-
+    })
     mainWindow.loadURL(`file://${__dirname}/app/index.html`);
 })
 
@@ -64,3 +66,9 @@ ipcMain.on('curso-stop', (event, curso, tempoEstudado) => {
     // Salvar Arquivo
     data.saveData(curso, tempoEstudado)
 })
+
+ipcMain.on('curso-adicionado', (event, novoCurso) => {
+    let novoTemplate = templateGenerator.adicionaCursoNoTray(novoCurso, mainWindow)
+    let novoTrayMenu = Menu.buildFromTemplate(novoTemplate)
+    tray.setContextMenu(novoTrayMenu)
+});
