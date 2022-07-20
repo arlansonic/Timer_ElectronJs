@@ -26,6 +26,35 @@ app.on('ready', () => {
     mainWindow.loadURL(`file://${__dirname}/app/index.html`);
 })
 
+// Menu da Aplicação
+let templateMenu = [{
+    label: 'Menu Electron',
+    submenu: [
+        {
+            label: 'Item 1'
+        },
+        {
+            label: 'Item 2'
+        }
+    ]
+}]
+
+// Menu Somente para MAC OS
+
+if(process.plataform == 'darwin'){
+    templateMenu.unshift({
+        label: app.getName(),
+        submenu: [{
+            label: 'O Mac é Complicado'
+        }]
+    })
+}
+
+let menuPrincipal = Menu.buildFromTemplate(templateMenu)
+Menu.setApplicationMenu(menuPrincipal)
+
+// Fim Menu da Aplicação
+
 app.on('window-all-closed', () => {
     app.quit()
 })
