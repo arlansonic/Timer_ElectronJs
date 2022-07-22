@@ -63,7 +63,8 @@ const geraTemplateMenuPrincipal = (app) => {
                     label: 'Sobre o Alura Timer',
                     click: () => {
                         ipcMain.emit('abrir-janela-sobre')
-                    }
+                    },
+                    accelerator: 'CommandOrControl+I'
                 }
             ]
         }]
