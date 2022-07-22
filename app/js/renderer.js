@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, globalShortcut } = require('electron');
 const timer = require('./timer')
 const data = require('../../data')
 
@@ -48,3 +48,8 @@ botaoAdicionar.addEventListener('click', () => {
     ipcRenderer.send('curso-adicionado', novoCurso);
 })
 
+ipcRenderer.on('atalho-iniciar-e-parar', () => {
+    console.log('Atalho Iniciar e Parar')
+    let click = new MouseEvent('click')
+    botaoPlay.dispatchEvent(click)
+})
