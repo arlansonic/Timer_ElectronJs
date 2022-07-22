@@ -24,36 +24,12 @@ app.on('ready', () => {
         }
     })
     mainWindow.loadURL(`file://${__dirname}/app/index.html`);
+    // mainWindow.openDevTools()
+    // Menu da Aplicação
+    let menuPrincipal = Menu.buildFromTemplate(templateGenerator.geraTemplateMenuPrincipal(app))
+    Menu.setApplicationMenu(menuPrincipal)
+    // Fim Menu da Aplicação
 })
-
-// Menu da Aplicação
-let templateMenu = [{
-    label: 'Menu Electron',
-    submenu: [
-        {
-            label: 'Item 1'
-        },
-        {
-            label: 'Item 2'
-        }
-    ]
-}]
-
-// Menu Somente para MAC OS
-
-if(process.plataform == 'darwin'){
-    templateMenu.unshift({
-        label: app.getName(),
-        submenu: [{
-            label: 'O Mac é Complicado'
-        }]
-    })
-}
-
-let menuPrincipal = Menu.buildFromTemplate(templateMenu)
-Menu.setApplicationMenu(menuPrincipal)
-
-// Fim Menu da Aplicação
 
 app.on('window-all-closed', () => {
     app.quit()
@@ -61,7 +37,7 @@ app.on('window-all-closed', () => {
 
 // Abrindo tela de Sobre
 
-let = sobreWindow = null
+let sobreWindow = null
 ipcMain.on('abrir-janela-sobre', () => {
     // Impedir que abra mais de uma janela
     if (sobreWindow == null) {

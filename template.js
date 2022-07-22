@@ -1,6 +1,7 @@
 const data = require('./data')
+const { ipcMain } = require('electron')
 
-templateInicial : null
+templateInicial: null
 const generateTrayTemplate = (win) => {
     let template = [
         {
@@ -38,6 +39,50 @@ const adicionaCursoNoTray = (curso) => {
     return templateInicial
 }
 
+const geraTemplateMenuPrincipal = (app) => {
+    let templateMenu = [
+        {
+            label: 'View',
+            submenu: [{
+                role: 'reload'
+            }, {
+                role: 'toggledevtools'
+            }]
+        }, {
+            label: 'window',
+            submenu: [{
+                role: 'minimize'
+            }, {
+                role: 'close'
+            }]
+        },
+        {
+            label: 'Sobre',
+            submenu: [
+                {
+                    label: 'Sobre o Alura Timer',
+                    click: () => {
+                        ipcMain.emit('abrir-janela-sobre')
+                    }
+                }
+            ]
+        }]
+
+    // Menu Somente para MAC OS
+
+    if (process.plataform == 'darwin') {
+        templateMenu.unshift({
+            label: app.getName(),
+            submenu: [{
+                label: 'Rodando no MAC'
+            }]
+        })
+    }
+
+    return templateMenu
+
+}
+
 module.exports = {
-    generateTrayTemplate, adicionaCursoNoTray
+    generateTrayTemplate, adicionaCursoNoTray, geraTemplateMenuPrincipal
 }
