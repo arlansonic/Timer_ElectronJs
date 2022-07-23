@@ -23,6 +23,7 @@ const generateTrayTemplate = (win) => {
         }
         template.push(menuItem)
     })
+    // console.log('Template:', templateInicial)
     templateInicial = template
     return template
 }
@@ -33,7 +34,7 @@ const adicionaCursoNoTray = (curso) => {
         type: 'radio',
         click: () => {
             win.send('curso-trocado', curso)
-        }
+        }   
     })
 
     return templateInicial

@@ -1,4 +1,4 @@
-const { ipcRenderer, globalShortcut } = require('electron');
+const { ipcRenderer } = require('electron');
 const timer = require('./timer')
 const data = require('../../data')
 
@@ -25,15 +25,23 @@ botaoPlay.addEventListener('click', () => {
     if (play) {
         timer.stop(curso.textContent)
         play = false
+        new Notification('Alura Timer', {
+            body: `Timer parado para ${curso.textContent}`,
+            icon: 'img/stop-button.svg'
+        })
     } else {
         timer.start(tempo)
         play = true
+        new Notification('Alura Timer', {
+            body: `O curso ${curso.textContent} foi iniciado!!!`,
+            icon: 'img/play-button.svg'
+        })
     }
     imgs = imgs.reverse()
     botaoPlay.src = imgs[0]
 })
 
-ipcRenderer.on('curso-trocado', async (event, nomeCurso) => {
+ipcRenderer.on('curso-trocado', async (event, nomeCurso) => {    
     data.getData(nomeCurso)
     let dados = await data.getData(nomeCurso)
     tempo.textContent = dados.tempo

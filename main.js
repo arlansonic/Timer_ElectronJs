@@ -2,16 +2,6 @@ const { app, BrowserWindow, ipcMain, Tray, Menu, globalShortcut } = require('ele
 const data = require('./data');
 const templateGenerator = require('./template')
 
-let tray = null
-app.on('ready', () => {
-    console.log('Aplicacao Iniciada')
-    // Icone barra de Tarefas
-    tray = new Tray('./app/img/icon-tray.png')
-    let template = templateGenerator.generateTrayTemplate(mainWindow)
-    let trayMenu = Menu.buildFromTemplate(template)
-    tray.setContextMenu(trayMenu)
-})
-
 let mainWindow = null
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
@@ -24,16 +14,24 @@ app.on('ready', () => {
         }
     })
     mainWindow.loadURL(`file://${__dirname}/app/index.html`);
-    // mainWindow.openDevTools()
     // Menu da Aplicação
     let menuPrincipal = Menu.buildFromTemplate(templateGenerator.geraTemplateMenuPrincipal(app))
     Menu.setApplicationMenu(menuPrincipal)
     // Fim Menu da Aplicação
-
     // Global Shortcuts
     globalShortcut.register('CmdOrCtrl+Shift+A', () => {
         mainWindow.send('atalho-iniciar-e-parar')
     })
+})
+
+let tray = null
+app.on('ready', () => {
+    console.log('Aplicacao Iniciada')
+    // Icone barra de Tarefas
+    tray = new Tray('./app/img/icon-tray.png')
+    let template = templateGenerator.generateTrayTemplate(mainWindow)
+    let trayMenu = Menu.buildFromTemplate(template)
+    tray.setContextMenu(trayMenu)
 })
 
 app.on('window-all-closed', () => {
