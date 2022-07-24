@@ -34,7 +34,7 @@ const adicionaCursoNoTray = (curso) => {
         type: 'radio',
         click: () => {
             win.send('curso-trocado', curso)
-        }   
+        }
     })
 
     return templateInicial

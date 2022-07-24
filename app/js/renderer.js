@@ -41,14 +41,26 @@ botaoPlay.addEventListener('click', () => {
     botaoPlay.src = imgs[0]
 })
 
-ipcRenderer.on('curso-trocado', async (event, nomeCurso) => {    
+ipcRenderer.on('curso-trocado', async (event, nomeCurso) => {
+    // timer.stop(curso.textContent)
     data.getData(nomeCurso)
     let dados = await data.getData(nomeCurso)
-    tempo.textContent = dados.tempo
+    try {
+        tempo.textContent = dados.tempo
+    } catch (err) {
+        console.log('O Curso não Possui JSON', err)
+        tempo.textContent = '00:00:00'
+    }
     curso.textContent = nomeCurso
 })
 
 botaoAdicionar.addEventListener('click', () => {
+
+    if (campoAdicionar.value == '') {
+        alert('Preencha o nome do Curso!!!')
+        return
+    }
+
     let novoCurso = campoAdicionar.value;
     curso.textContent = novoCurso;
     tempo.textContent = '00:00:00';
